@@ -1,10 +1,13 @@
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-tabs/paper-tabs.html">
+<link rel="import" href="../paper-tabs/paper-tab.html">
+<link rel="import" href="../oc-product-tags/oc-product-tags.html">
 
 <!--
 `oc-library-tags`
 Element to create and manage tags in the product library section of the Ordercloud platform
 
-@demo demo/index.html 
+@demo demo/index.html
 -->
 
 <dom-module id="oc-library-tags">
@@ -13,8 +16,32 @@ Element to create and manage tags in the product library section of the Orderclo
       :host {
         display: block;
       }
+      paper-tabs {
+        background-color: var(--primary-color);
+        --paper-tabs-selection-bar-color: #fff;
+      }
+      paper-tab {
+        color: #fff;
+        --paper-tab-ink: #fff;
+      }
+      oc-product-tags {
+        padding: 20px;
+      }
     </style>
-    <h2>Hello [[prop1]]</h2>
+
+    <paper-tabs selected="[[ _selectedTab(routeData.tab, active) ]]" attr-for-selected="tag-type" on-tap="_selectTab">
+      <paper-tab tag-type="products">Product</paper-tab>
+      <paper-tab tag-type="menu">Menu</paper-tab>
+      <paper-tab tag-type="search">Search</paper-tab>
+    </paper-tabs>
+
+    <oc-product-tags
+            id="tagsView"
+            loading="{{ loading }}"
+            tag-type="[[ _selectedTab(routeData.tab, active) ]]"
+            organisation-id="[[ organisationId ]]"
+    ></oc-product-tags>
+
   </template>
 
   <script>
